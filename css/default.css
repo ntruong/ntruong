@@ -33,6 +33,14 @@ li {
   line-height: 16px;
 }
 
+a {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
 #banner {
   top: 0px;
   left: 0px;
@@ -42,24 +50,39 @@ li {
   background-color: #ff0000;
 }
 
-#home {
+#body {
   width: 600px;
-  padding: 20px 0px;
   margin: 0px auto;
+}
+
+#home {
+  padding: 20px 0px;
 }
 
 #contact{
   text-align: center;
 }
 
-@media only screen and (max-width: 767px) {
-  .desktop {
+@media only screen and (min-width: 768px) {
+  .mobile {
     display: none;
   }
 }
 
-@media only screen and (min-width: 768px) {
-  .mobile {
-    display: none;
+@media only screen and (max-width: 767px) {
+  .desktop {
+    display: none !important;
+  }
+
+  h1 {
+    font-family: Vollkorn;
+    text-align: center;
+    color: #000000;
+    font-size: 50px;
+  }
+
+  #body {
+    width: calc(100% - 40px);
+    margin 0px auto;
   }
 }
