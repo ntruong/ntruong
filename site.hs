@@ -1,8 +1,10 @@
 --------------------------------------------------------------------------------
 {-# LANGUAGE OverloadedStrings #-}
---------------------------------------------------------------------------------
 
-import Hakyll
+import qualified Data.Set as S
+import           Hakyll
+import           Text.Pandoc.Options
+--------------------------------------------------------------------------------
 
 main :: IO ()
 main = hakyll $ do
@@ -21,3 +23,15 @@ main = hakyll $ do
       >>= relativizeUrls
 
   match "templates/*" $ compile templateBodyCompiler
+
+pandocMathCompiler =
+  let mathExtensions = [Ext_tex_math_dollars,
+                        Ext_tex_math_double_backslash,
+                        Ext_latex_macros]
+      defaultExtensions = writerExtensions defaultHakyllWriterOptions
+      newExtensions = foldr S.insert defaultExtensions mathExtensions
+      writerOptions = defaultHakyllWriterOptions {
+        writerExtensions = newExtensions,
+        writerHTMLMathMethod = MathJax ""
+      }
+  in pandocCompilerWith defaultHakyllReaderOptions writerOptions

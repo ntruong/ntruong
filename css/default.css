@@ -1,17 +1,18 @@
-@font-face {
-  font-family: 'Lato', sans-serif;
-  font-family: 'Vollkorn', sans-serif;
-}
-
 html, body {
-  font-family: Lato;
-  font-size: 20px;
+  font-family: Open Sans;
+  font-size: 18px;
   width: 100%;
+  margin: 0px;
   color: #444444;
 }
 
+@font-face {
+  font-family: 'Spectral SC', serif;
+  font-family: 'Open Sans', sans-serif;
+}
+
 h1 {
-  font-family: Vollkorn;
+  font-family: Spectral SC;
   text-align: center;
   color: #000000;
   font-size: 60px;
@@ -75,7 +76,7 @@ a:hover {
   }
 
   h1 {
-    font-family: Vollkorn;
+    font-family: Spectral SC;
     text-align: center;
     color: #000000;
     font-size: 50px;

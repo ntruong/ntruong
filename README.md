@@ -1,4 +1,4 @@
-# ntruong.?
+# n-truong.?
 Carpe noctem.
 
 ## License
