@@ -18,22 +18,6 @@ h1 {
   font-size: 60px;
 }
 
-ul {
-  display: inline-block;
-  list-style-type: none;
-  padding: 0px;
-  margin: 0px auto;
-}
-
-li {
-  float: left;
-  text-align: center;
-  font-size: 15px;
-  padding: 0px 15px;
-  height: 16px;
-  line-height: 16px;
-}
-
 a {
   text-decoration: none;
 }
@@ -47,19 +31,30 @@ a:hover {
   margin: 0px auto;
 }
 
-.ToC li {
-  font-size: 20px;
+.ToC ul {
+  padding: 0px;
+  list-style-type: none;
 }
 
-.note ul {
-  list-style-type: disc !important;
-  margin: 0px 18px !important;
+.boxlist ul {
+  display: inline-block;
+  list-style-type: none;
+  padding: 0px;
+  margin: 0px auto;
 }
 
-.note li {
-  text-align: left !important;
-  float: none !important;
-  padding: 5px 0px !important;
+.boxlist li {
+  float: left;
+  text-align: center;
+  font-size: 15px;
+  padding: 0px 15px;
+  height: 16px;
+  line-height: 16px;
+}
+
+.return {
+  color: #000000;
+  font-size: 15px;
 }
 
 #banner {
@@ -82,6 +77,15 @@ a:hover {
 
 #contact{
   text-align: center;
+}
+
+#mainIndex {
+  display: block;
+  width: 100%;
+  height: 100%;
+
+  margin: 0px;
+  padding: 0px;
 }
 
 @media only screen and (min-width: 768px) {

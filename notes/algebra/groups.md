@@ -3,10 +3,9 @@ title: Groups
 ordering: a1
 ---
 
-## Groups
-**Definition:** Let $G$ be a set together with a law of composition $\cdot: G
-\times G \to G$, denoted $(G, \cdot)$. We say $(G, \cdot)$ is a group if it
-satisfies:
+### Definition
+Let $G$ be a set together with a law of composition $\cdot: G \times G \to G$,
+denoted $(G, \cdot)$. We call $(G, \cdot)$ a *group* if it satisfies:
 
 - Closure: $\forall a, b \in G, a \cdot b \in G$
 - Associativity: $\forall a, b, c \in G, a \cdot (b \cdot c) = (a \cdot b) \cdot
