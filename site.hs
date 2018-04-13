@@ -18,13 +18,6 @@ main = hakyll $ do
     route   idRoute
     compile compressCssCompiler
 
-  match "notes/*" $ do
-    route   $ setExtension "html"
-    compile $ pandocMathCompiler
-      >>= loadAndApplyTemplate "templates/note.html" defaultContext
-      >>= loadAndApplyTemplate "templates/default.html" defaultContext
-      >>= relativizeUrls
-
   match "static/*" $ do
     route   idRoute
     compile copyFileCompiler
@@ -35,62 +28,66 @@ main = hakyll $ do
       >>= loadAndApplyTemplate "templates/default.html" defaultContext
       >>= relativizeUrls
 
-  notebook "algebra"
+  create ["notes/index.html"] $ do
+    route idRoute
+    compile $ do
+      notes <- loadToCSorted $ indexPattern "notes/*"
+      let notebookCtx = listField "ToC" defaultContext notes `mappend`
+                        constField "return" "Home" `mappend`
+                        constField "title" "Notes" `mappend`
+                        defaultContext
+
+      makeItem ""
+        >>= loadAndApplyTemplate "templates/notebook.html" notebookCtx
+        >>= loadAndApplyTemplate "templates/default.html" notebookCtx
+        >>= relativizeUrls
+
+  notebook "notes/algebra"
 
   match "templates/*" $ compile templateBodyCompiler
 
-noteIndexPattern :: String -> Pattern
-noteIndexPattern id = fromGlob $ "notes/" ++ id ++ "/index.md"
+notebook :: String -> Rules ()
+notebook id = do
+  match (indexPattern id) $ do
+    route $ setExtension "html"
+    compile $ do
+      notes <- loadToCSorted $ pagesPattern id
+      let notebookCtx = listField "ToC" defaultContext notes `mappend`
+                        constField "return" "Notes" `mappend`
+                        defaultContext
 
-notePattern :: String -> Pattern
-notePattern id = (fromGlob $ "notes/" ++ id ++ "/*") .&&.
-                 complement (noteIndexPattern id)
+      pandocMathCompiler
+        >>= loadAndApplyTemplate "templates/notebook.html" notebookCtx
+        >>= loadAndApplyTemplate "templates/default.html" notebookCtx
+        >>= relativizeUrls
 
-loadNotesSorted :: (Binary a, Typeable a, MonadMetadata m) =>
-                   String -> Compiler (m [Item a])
-loadNotesSorted id = fmap sortNotes $ loadNotes id
+  match (pagesPattern id) $ do
+    route $ setExtension "html"
+    compile $ pandocMathCompiler
+      >>= loadAndApplyTemplate "templates/note.html" defaultContext
+      >>= loadAndApplyTemplate "templates/default.html" defaultContext
+      >>= relativizeUrls
 
-loadNotes :: (Binary a, Typeable a) => String -> Compiler [Item a]
-loadNotes id = loadAll $ (notePattern id) .&&. hasVersion "toc"
+indexPattern :: String -> Pattern
+indexPattern id = fromGlob $ id ++ "/index.md"
 
-loadNotebook :: (Binary a, Typeable a) => String -> Compiler (Item a)
-loadNotebook id = fmap head . loadAll $ (noteIndexPattern id) .&&.
-                  hasVersion "toc"
+pagesPattern :: String -> Pattern
+pagesPattern id = (fromGlob $ id ++ "/*") .&&. complement (indexPattern id)
 
-sortNotes :: MonadMetadata m => [Item a] -> m [Item a]
-sortNotes =
-  sortByM $ \x -> getMetadataField (itemIdentifier x) "ordering"
+loadToC :: (Binary a, Typeable a) => Pattern -> Compiler [Item a]
+loadToC pat = loadAll $ pat
+
+loadToCSorted :: (Binary a, Typeable a, MonadMetadata m) =>
+                 Pattern -> Compiler (m [Item a])
+loadToCSorted pat = fmap (sortMd "ordering") $ loadToC pat
+
+sortMd :: MonadMetadata m => String -> [Item a] -> m [Item a]
+sortMd field =
+  sortByM $ \x -> getMetadataField (itemIdentifier x) field
   where
     sortByM :: (Monad m, Ord k) => (a -> m k) -> [a] -> m [a]
     sortByM f xs = liftM (map fst . sortBy (comparing snd)) $
                    mapM (\x -> liftM (x,) (f x)) xs
-
-compileNoteTemplate :: String -> String -> Rules ()
-compileNoteTemplate id template = compile $ do
-  notes <- loadNotesSorted id
-  let notebookCtx = listField "notes" defaultContext notes `mappend`
-                    defaultContext
-
-  pandocMathCompiler
-    >>= loadAndApplyTemplate (fromFilePath template) notebookCtx
-    >>= loadAndApplyTemplate "templates/default.html" notebookCtx
-    >>= relativizeUrls
-
-
-notebook :: String -> Rules ()
-notebook id = do
-  let compileTemplate = compileNoteTemplate id
-  match (noteIndexPattern id) $ do
-    route $ setExtension "html"
-    compileTemplate "templates/notebook.html"
-
-  match (notePattern id) $ do
-    route $ setExtension "html"
-    compileTemplate "templates/note.html"
-
-  match (notePattern id) $ version "toc" $ do
-    route $ setExtension "html"
-    compile getResourceBody
 
 pandocMathCompiler =
   let mathExtensions = [Ext_tex_math_dollars,
