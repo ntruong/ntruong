@@ -31,15 +31,11 @@ main = hakyll $ do
   create ["notes/index.html"] $ do
     route idRoute
     compile $ do
-      notes <- loadToCSorted $ indexPattern "notes/*"
-      let notebookCtx = listField "ToC" defaultContext notes `mappend`
-                        constField "return" "Home" `mappend`
-                        constField "title" "Notes" `mappend`
-                        defaultContext
+      notes <- loadSorted $ indexPattern "notes/*"
 
       makeItem ""
-        >>= loadAndApplyTemplate "templates/notebook.html" notebookCtx
-        >>= loadAndApplyTemplate "templates/default.html" notebookCtx
+        >>= loadAndApplyTemplate "templates/notebook.html" (indexCtx notes)
+        >>= loadAndApplyTemplate "templates/default.html" (indexCtx notes)
         >>= relativizeUrls
 
   notebook "notes/algebra"
@@ -51,22 +47,40 @@ notebook id = do
   match (indexPattern id) $ do
     route $ setExtension "html"
     compile $ do
-      notes <- loadToCSorted $ pagesPattern id
-      let notebookCtx = listField "ToC" defaultContext notes `mappend`
-                        constField "return" "Notes" `mappend`
-                        defaultContext
+      notes <- loadSorted $ pagesPattern id
 
       pandocMathCompiler
-        >>= loadAndApplyTemplate "templates/notebook.html" notebookCtx
-        >>= loadAndApplyTemplate "templates/default.html" notebookCtx
+        >>= loadAndApplyTemplate "templates/notebook.html" (indexCtx notes)
+        >>= loadAndApplyTemplate "templates/default.html" (indexCtx notes)
+        >>= relativizeUrls
+
+  tags <- buildTags (pagesPattern id) $ fromCapture "tags/*.html"
+
+  tagsRules tags $ \tag pattern -> do
+    route idRoute
+    compile $ do
+      notes <- loadAll pattern
+      let ctx = constField "title" ("Notes tagged [" ++ tag ++ "]") `mappend`
+                indexCtx (return notes)
+
+      makeItem ""
+        >>= loadAndApplyTemplate "templates/tag.html" ctx
+        >>= loadAndApplyTemplate "templates/default.html" ctx
         >>= relativizeUrls
 
   match (pagesPattern id) $ do
     route $ setExtension "html"
     compile $ pandocMathCompiler
-      >>= loadAndApplyTemplate "templates/note.html" defaultContext
-      >>= loadAndApplyTemplate "templates/default.html" defaultContext
+      >>= loadAndApplyTemplate "templates/note.html" (noteCtx tags)
+      >>= loadAndApplyTemplate "templates/default.html" (noteCtx tags)
       >>= relativizeUrls
+
+indexCtx :: Compiler [Item String] -> Context String
+indexCtx pages = listField "pages" defaultContext pages `mappend`
+                 defaultContext
+
+noteCtx :: Tags -> Context String
+noteCtx tags = tagsField "tags" tags `mappend` defaultContext
 
 indexPattern :: String -> Pattern
 indexPattern id = fromGlob $ id ++ "/index.md"
@@ -74,12 +88,9 @@ indexPattern id = fromGlob $ id ++ "/index.md"
 pagesPattern :: String -> Pattern
 pagesPattern id = (fromGlob $ id ++ "/*") .&&. complement (indexPattern id)
 
-loadToC :: (Binary a, Typeable a) => Pattern -> Compiler [Item a]
-loadToC pat = loadAll $ pat
-
-loadToCSorted :: (Binary a, Typeable a, MonadMetadata m) =>
-                 Pattern -> Compiler (m [Item a])
-loadToCSorted pat = fmap (sortMd "ordering") $ loadToC pat
+loadSorted :: (Binary a, Typeable a, MonadMetadata m) =>
+              Pattern -> Compiler (m [Item a])
+loadSorted pattern = fmap (sortMd "ordering") $ loadAll pattern
 
 sortMd :: MonadMetadata m => String -> [Item a] -> m [Item a]
 sortMd field =

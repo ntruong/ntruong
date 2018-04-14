@@ -2,8 +2,9 @@ html, body {
   font-family: Open Sans;
   font-size: 18px;
   width: 100%;
-  margin: 0px;
+  margin: 0;
   color: #444444;
+  background: #f9f9f9;
 }
 
 @font-face {
@@ -15,7 +16,8 @@ h1 {
   font-family: Spectral SC;
   text-align: center;
   color: #000000;
-  font-size: 60px;
+  font-size: 4em;
+  margin-bottom: 0;
 }
 
 a {
@@ -26,53 +28,59 @@ a:hover {
   text-decoration: underline;
 }
 
-.ToC {
+.info {
+  font-size: 0.6em;
+  color: #000000;
   text-align: center;
-  margin: 0px auto;
 }
 
-.ToC ul {
-  padding: 0px;
+.return {
+  margin-bottom: 2em;
+}
+
+.return a {
+  color: #000000;
+  font-size: 0.6em;
+}
+
+.postList ul {
+  padding: 0;
+  margin: 0;
   list-style-type: none;
 }
 
-.boxlist ul {
+.horizontalList ul {
   display: inline-block;
   list-style-type: none;
-  padding: 0px;
-  margin: 0px auto;
+  padding: 0;
+  margin: 0 auto;
 }
 
-.boxlist li {
+.horizontalList li {
   float: left;
   text-align: center;
   font-size: 15px;
-  padding: 0px 15px;
+  padding: 0 15px;
   height: 16px;
   line-height: 16px;
 }
 
-.return {
-  color: #000000;
-  font-size: 15px;
-}
-
 #banner {
-  top: 0px;
-  left: 0px;
+  top: 0;
+  left: 0;
   position: absolute;
   width: 100%;
-  height: 10px;
-  background-color: #ff0000;
+  height: 1em;
+  background-color: #ed5565;
 }
 
 #body {
   width: 700px;
-  margin: 0px auto;
+  margin: 0 auto;
 }
 
 #home {
-  padding: 20px 0px;
+  padding: 20px 0;
 }
 
 #contact{
@@ -84,8 +92,8 @@ a:hover {
   width: 100%;
   height: 100%;
 
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 @media only screen and (min-width: 768px) {
@@ -108,6 +116,6 @@ a:hover {
 
   #body {
     width: calc(100% - 40px);
-    margin 0px auto;
+    margin 0 auto;
   }
 }

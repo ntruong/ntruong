@@ -1,0 +1,9 @@
+blockquote {
+  background: #ffffff;
+  border-left: .5em solid;
+  border-color: #ed5565;
+  box-shadow: 0.1em 0.1em 1em #ccc;
+  margin: 0 auto;
+  padding: 0 1em;
+  overflow: hidden;
+}

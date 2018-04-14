@@ -1,15 +1,9 @@
 <h1>$title$</h1>
-<div>$body$</div>
 
-<div class="ToC">
-  <h2>Notes</h2>
-  <ul>
-    $for(ToC)$
-      <li>
-        <a href=$url$>$title$</a>
-      </li>
-    $endfor$
-  </ul>
+$body$
+
+$partial("templates/post-list.html")$
+
+<div class="return">
+  <a href="../index.html">-- Back.</a>
 </div>
-
-<a href="../index.html" class="return">-- Back to $return$.</a>
