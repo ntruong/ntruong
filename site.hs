@@ -34,7 +34,7 @@ main = hakyll $ do
       notes <- loadSorted $ indexPattern "notes/*"
 
       makeItem ""
-        >>= loadAndApplyTemplate "templates/notebook.html" (indexCtx notes)
+        >>= loadAndApplyTemplate "templates/book.html" (indexCtx notes)
         >>= loadAndApplyTemplate "templates/default.html" (indexCtx notes)
         >>= relativizeUrls
 
@@ -50,7 +50,7 @@ notebook id = do
       notes <- loadSorted $ pagesPattern id
 
       pandocMathCompiler
-        >>= loadAndApplyTemplate "templates/notebook.html" (indexCtx notes)
+        >>= loadAndApplyTemplate "templates/book.html" (indexCtx notes)
         >>= loadAndApplyTemplate "templates/default.html" (indexCtx notes)
         >>= relativizeUrls
 
@@ -71,7 +71,7 @@ notebook id = do
   match (pagesPattern id) $ do
     route $ setExtension "html"
     compile $ pandocMathCompiler
-      >>= loadAndApplyTemplate "templates/note.html" (noteCtx tags)
+      >>= loadAndApplyTemplate "templates/article.html" (noteCtx tags)
       >>= loadAndApplyTemplate "templates/default.html" (noteCtx tags)
       >>= relativizeUrls
 

@@ -4,7 +4,7 @@ ordering: a1
 tags: groups, subgroups
 ---
 
-## Definition
+# Definition
 >Let $G$ be a set together with a law of composition $\cdot: G \times G \to G$,
 denoted $(G, \cdot)$. We call $(G, \cdot)$ a *group* if it satisfies:
 >
@@ -13,9 +13,9 @@ denoted $(G, \cdot)$. We call $(G, \cdot)$ a *group* if it satisfies:
   c$
 - Identity: $\exists e \in G$ such that $e \cdot a = a \cdot e = a$ for all $a
   \in G$
-- Inverse: $a \in G \Rightarrow \exists a^{-1} \in G, aa^{-1} = a^{-1}a = e$.
+- Inverse: $a \in G \Rightarrow a^{-1} \in G$
 
-## Example
+# Example
 One example of a group is $(\mathbb{Z}, +)$. Clearly, the sum of two integers
 must be an integer and we already know that addition is associative. The
 identity element $e$ is simply the additive identity $0$; this is easily
@@ -26,5 +26,13 @@ Alternatively, we can see that $(\mathbb{N}, +)$ is not a group. While closure,
 associativity, and identity all hold, we do not have inverses for non-trivial
 natural numbers.
 
-## Definition
+# Definition
+>Let $G$ be a group. A subset $H \subseteq G$ is called a *subgroup* if
+>
+>- Closure: $\forall h, k \in H, h \cdot k \in H$
+- Identity: $1_G \in H$
+- Inverse: $a \in H \Rightarrow a^{-1} \in H$
 
+If $H$ is a subgroup of $G$, then we can effectively restrict the composition
+law of $G$ to $H$. Moreover, $H$ is, in itself, a group with respect to this
+law.
