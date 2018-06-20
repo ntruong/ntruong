@@ -2,21 +2,30 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Spectral+SC" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="/css/default.css"/>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    $if(description)$
-      <meta name="description" content="$description$">
-    $else$
-      <meta name="description" content="Carpe noctem.">
-    $endif$
-    <title>$title$ | Nicholas Truong</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
   </head>
   <body>
-    <div id="body">
-      $body$
-    </div>
+    <header id="menubar">
+      <div id="menu">
+        <svg class="icon" viewBox="0 0 1024 1024">
+          <rect x="112", y="162", rx="50", ry="50", height="100", width="800"></rect>
+          <rect x="112", y="462", rx="50", ry="50", height="100", width="800"></rect>
+          <rect x="112", y="762", rx="50", ry="50", height="100", width="800"></rect>
+        </svg>
+        <nav class="pane hidden">
+          <a href="/index.html">Home</a>
+          <a href="/notes/index.html">Notes</a>
+          <a href="/static/resume.pdf">Resume</a>
+          <a href="https://github.com/n-truong">Github</a>
+          <a href="https://linkedin.com/in/nicholas-truong">LinkedIn</a>
+          <a href="mailto:nt31415@gmail.com">Email</a>
+        </nav>
+      </div>
+      <h1>$title$</h1>
+    </header>
+    $body$
   </body>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async></script>
+  <script src="/js/main.js"></script>
 </html>

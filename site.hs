@@ -4,7 +4,7 @@
 import           Control.Monad       (liftM)
 import           Data.Binary
 import           Data.List
-import           Data.Monoid         (mappend)
+import           Data.Monoid         ((<>))
 import           Data.Ord            (comparing)
 import qualified Data.Set as S
 import           Data.Typeable
@@ -14,17 +14,21 @@ import           Text.Pandoc.Options
 
 main :: IO ()
 main = hakyll $ do
-  match "css/*" $ do
+  match "css/**" $ do
     route   idRoute
     compile compressCssCompiler
 
-  match "static/*" $ do
+  match "js/**" $ do
+    route   idRoute
+    compile copyFileCompiler
+
+  match "static/**" $ do
     route   idRoute
     compile copyFileCompiler
 
   match "index.html" $ do
     route idRoute
-    compile $ pandocCompiler
+    compile $ getResourceBody
       >>= loadAndApplyTemplate "templates/default.html" defaultContext
       >>= relativizeUrls
 
@@ -32,26 +36,30 @@ main = hakyll $ do
     route idRoute
     compile $ do
       notes <- loadSorted $ indexPattern "notes/*"
+      let ctx = constField "title" "Notes" <>
+                (indexCtx notes)
 
       makeItem ""
-        >>= loadAndApplyTemplate "templates/book.html" (indexCtx notes)
-        >>= loadAndApplyTemplate "templates/default.html" (indexCtx notes)
+        >>= loadAndApplyTemplate "templates/book.html" ctx
+        >>= loadAndApplyTemplate "templates/default.html" ctx
         >>= relativizeUrls
 
-  notebook "notes/algebra"
+  notebook "notes/algebra" "Algebraic Structures"
 
   match "templates/*" $ compile templateBodyCompiler
 
-notebook :: String -> Rules ()
-notebook id = do
+notebook :: String -> String -> Rules ()
+notebook id title = do
   match (indexPattern id) $ do
     route $ setExtension "html"
     compile $ do
       notes <- loadSorted $ pagesPattern id
+      let ctx = constField "title" title <>
+                (indexCtx notes)
 
-      pandocMathCompiler
-        >>= loadAndApplyTemplate "templates/book.html" (indexCtx notes)
-        >>= loadAndApplyTemplate "templates/default.html" (indexCtx notes)
+      makeItem ""
+        >>= loadAndApplyTemplate "templates/book.html" ctx
+        >>= loadAndApplyTemplate "templates/default.html" ctx
         >>= relativizeUrls
 
   tags <- buildTags (pagesPattern id) $ fromCapture "tags/*.html"
@@ -60,7 +68,7 @@ notebook id = do
     route idRoute
     compile $ do
       notes <- loadAll pattern
-      let ctx = constField "title" ("Notes tagged [" ++ tag ++ "]") `mappend`
+      let ctx = constField "title" ("[" ++ tag ++ "]") <>
                 indexCtx (return notes)
 
       makeItem ""
@@ -76,11 +84,11 @@ notebook id = do
       >>= relativizeUrls
 
 indexCtx :: Compiler [Item String] -> Context String
-indexCtx pages = listField "pages" defaultContext pages `mappend`
+indexCtx pages = listField "pages" defaultContext pages <>
                  defaultContext
 
 noteCtx :: Tags -> Context String
-noteCtx tags = tagsField "tags" tags `mappend` defaultContext
+noteCtx tags = tagsField "tags" tags <> defaultContext
 
 indexPattern :: String -> Pattern
 indexPattern id = fromGlob $ id ++ "/index.md"
@@ -92,6 +100,7 @@ loadSorted :: (Binary a, Typeable a, MonadMetadata m) =>
               Pattern -> Compiler (m [Item a])
 loadSorted pattern = fmap (sortMd "ordering") $ loadAll pattern
 
+-- | Sorts items by a specified metadata field (with ordering)
 sortMd :: MonadMetadata m => String -> [Item a] -> m [Item a]
 sortMd field =
   sortByM $ \x -> getMetadataField (itemIdentifier x) field
@@ -100,6 +109,7 @@ sortMd field =
     sortByM f xs = liftM (map fst . sortBy (comparing snd)) $
                    mapM (\x -> liftM (x,) (f x)) xs
 
+-- | Compile template with LaTeX
 pandocMathCompiler =
   let mathExtensions = [Ext_tex_math_dollars,
                         Ext_tex_math_double_backslash,
