@@ -1,0 +1,25 @@
+h1 {
+  font-size: 2rem;
+}
+
+header h1 {
+  margin: 0 auto;
+  font-size: 4rem;
+}
+
+blockquote {
+  background: #eff5ff;
+  border: 1px solid;
+  border-left: .5rem solid;
+  border-color: #5a80bb;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.backLink {
+  display: inline-block;
+  width: auto;
+  margin: 0 15%;
+  padding: 2%;
+}

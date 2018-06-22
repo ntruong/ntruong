@@ -4,6 +4,12 @@
     <meta charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet" type="text/css">
+    $if(css)$
+    $for(css)$
+    <link href="/$path$" rel="stylesheet" type="text/css">
+    $endfor$
+    $endif$
+    <title>$title$ | Nicholas Truong</title>
   </head>
   <body>
     <header id="menubar">
@@ -17,7 +23,7 @@
           <a href="/index.html">Home</a>
           <a href="/notes/index.html">Notes</a>
           <a href="/static/resume.pdf">Resume</a>
-          <a href="https://github.com/n-truong">Github</a>
+          <a href="https://github.com/ntruong">Github</a>
           <a href="https://linkedin.com/in/nicholas-truong">LinkedIn</a>
           <a href="mailto:nt31415@gmail.com">Email</a>
         </nav>

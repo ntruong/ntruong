@@ -6,15 +6,19 @@ body {
   font-family: Open Sans;
   margin: 0;
   padding-bottom: 4rem;
-  color: #444444;
   background: #f9f9f9;
 }
 
 body * {
-  max-height: 100rem;
+  max-height: 1000rem;
   overflow: hidden;
   transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   box-sizing: border-box;
+}
+
+/* LaTeX is weird if you hide overflow */
+body .math * {
+  overflow: visible;
 }
 
 a {
@@ -38,7 +42,11 @@ h1 {
   background: #ffffff;
   border: 1px solid #cccccc;
   border-radius: 2px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.pane:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
 }
 
 .content {

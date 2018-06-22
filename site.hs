@@ -35,9 +35,9 @@ main = hakyll $ do
   create ["notes/index.html"] $ do
     route idRoute
     compile $ do
-      notes <- loadSorted $ indexPattern "notes/*"
-      let ctx = constField "title" "Notes" <>
-                (indexCtx notes)
+      let ctx = contexts [ cssCtx ["css/article.css"]
+                         , indexCtx $ loadAll $ indexPattern "notes/*"
+                         , constField "title" "Notes" ]
 
       makeItem ""
         >>= loadAndApplyTemplate "templates/book.html" ctx
@@ -48,14 +48,17 @@ main = hakyll $ do
 
   match "templates/*" $ compile templateBodyCompiler
 
+--------------------------------------------------------------------------------
+
 notebook :: String -> String -> Rules ()
 notebook id title = do
-  match (indexPattern id) $ do
+  create [fromFilePath (id ++ "/index.html")] $ do
     route $ setExtension "html"
     compile $ do
       notes <- loadSorted $ pagesPattern id
-      let ctx = constField "title" title <>
-                (indexCtx notes)
+      let ctx = contexts [ cssCtx ["css/article.css"]
+                         , indexCtx notes
+                         , constField "title" title ]
 
       makeItem ""
         >>= loadAndApplyTemplate "templates/book.html" ctx
@@ -67,9 +70,8 @@ notebook id title = do
   tagsRules tags $ \tag pattern -> do
     route idRoute
     compile $ do
-      notes <- loadAll pattern
-      let ctx = constField "title" ("[" ++ tag ++ "]") <>
-                indexCtx (return notes)
+      let ctx = contexts [ indexCtx (loadAll pattern)
+                         , constField "title" ("[" ++ tag ++ "]") ]
 
       makeItem ""
         >>= loadAndApplyTemplate "templates/tag.html" ctx
@@ -78,20 +80,33 @@ notebook id title = do
 
   match (pagesPattern id) $ do
     route $ setExtension "html"
-    compile $ pandocMathCompiler
-      >>= loadAndApplyTemplate "templates/article.html" (noteCtx tags)
-      >>= loadAndApplyTemplate "templates/default.html" (noteCtx tags)
-      >>= relativizeUrls
+    compile $ do
+      let ctx = contexts [ cssCtx ["css/article.css"]
+                         , noteCtx tags ]
+
+      pandocMathCompiler
+        >>= loadAndApplyTemplate "templates/article.html" ctx
+        >>= loadAndApplyTemplate "templates/default.html" ctx
+        >>= relativizeUrls
+
+--------------------------------------------------------------------------------
 
 indexCtx :: Compiler [Item String] -> Context String
-indexCtx pages = listField "pages" defaultContext pages <>
-                 defaultContext
+indexCtx pages = listField "pages" defaultContext pages
 
 noteCtx :: Tags -> Context String
-noteCtx tags = tagsField "tags" tags <> defaultContext
+noteCtx tags = tagsField "tags" tags
+
+cssCtx :: [Identifier] -> Context String
+cssCtx styles = listField "css" defaultContext (loadAll $ fromList styles)
+
+contexts :: [Context String] -> Context String
+contexts ctxs = mconcat ctxs <> defaultContext
+
+--------------------------------------------------------------------------------
 
 indexPattern :: String -> Pattern
-indexPattern id = fromGlob $ id ++ "/index.md"
+indexPattern id = fromGlob $ id ++ "/index.html"
 
 pagesPattern :: String -> Pattern
 pagesPattern id = (fromGlob $ id ++ "/*") .&&. complement (indexPattern id)
