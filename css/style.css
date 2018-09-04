@@ -70,16 +70,6 @@ h1 {
   border: transparent;
 }
 
-ul.horizontalList {
-  list-style-type: none;
-  padding: 0;
-}
-
-ul.horizontalList li {
-  float: left;
-  width: 10rem;
-}
-
 #menubar {
   display: flex;
   padding: 1rem 0;
