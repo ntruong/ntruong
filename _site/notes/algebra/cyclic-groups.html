@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet" type="text/css">
+    
+    
+    <link href="../../css/article.css" rel="stylesheet" type="text/css">
+    
+    
+    <title>Cyclic and Generative Groups | Nicholas Truong</title>
+  </head>
+  <body>
+    <header id="menubar">
+      <div id="menu">
+        <svg class="icon" viewBox="0 0 1024 1024">
+          <rect x="112" , y="162" , rx="50" , ry="50" , height="100" , width="800"></rect>
+          <rect x="112" , y="462" , rx="50" , ry="50" , height="100" , width="800"></rect>
+          <rect x="112" , y="762" , rx="50" , ry="50" , height="100" , width="800"></rect>
+        </svg>
+        <nav class="pane hidden">
+          <a href="../../index.html">Home</a>
+          <a href="../../notes/index.html">Notes</a>
+          <a href="../../static/resume.pdf">Resume</a>
+          <a href="https://github.com/ntruong">Github</a>
+          <a href="https://linkedin.com/in/nicholas-truong">LinkedIn</a>
+          <a href="mailto:nt31415@gmail.com">Email</a>
+        </nav>
+      </div>
+      <h1>Cyclic and Generative Groups</h1>
+    </header>
+    <div id="banner"></div>
+
+<article>
+  <header class="pane content">
+    <h1>Cyclic and Generative Groups</h1>
+    <div class="info">
+      
+        [<a href="../../tags/groups.html">groups</a>, <a href="../../tags/subgroups.html">subgroups</a>]
+      
+    </div>
+  </header>
+  <section class="pane content">
+    <p>Let <span class="math inline">\(G\)</span> be a group and <span class="math inline">\(A \subseteq G\)</span>. We can successively combine elements in <span class="math inline">\(A\)</span> to expand <span class="math inline">\(A\)</span> until <span class="math inline">\(A\)</span> is closed under the composition law. The minimum such subgroup <em>generated</em> by <span class="math inline">\(A\)</span> is denoted <span class="math inline">\(\langle A \rangle\)</span>.</p>
+<h1 id="example">Example</h1>
+<p>Consider the group <span class="math inline">\(G = (\mathbb{Z}, +)\)</span> and the subset <span class="math inline">\(A = \{2\}\)</span> of <span class="math inline">\(G\)</span>. Since <span class="math inline">\(2 \in A\)</span>, we must also have <span class="math inline">\(-2 \in \langle A \rangle\)</span>. Then we must also have <span class="math inline">\(\{\pm 4\} \subseteq \langle A \rangle\)</span>. Expanding outwards, we see that <span class="math display">\[
+  \langle A \rangle = \{\cdots, -4, -2, 0, 2, 4, \cdots\}
+\]</span> is the minimum subgroup of <span class="math inline">\(G\)</span> that contains <span class="math inline">\(A\)</span>.</p>
+<h1 id="definition">Definition</h1>
+<blockquote>
+<p>A subgroup of a group <span class="math inline">\(G\)</span> is called <em>cyclic</em> if it is of the form <span class="math inline">\(\langle x \rangle\)</span> for some <span class="math inline">\(x \in G\)</span>.</p>
+</blockquote>
+<h1 id="proposition">Proposition</h1>
+<blockquote>
+<p>Suppose a cyclic group <span class="math inline">\(G\)</span> has <span class="math inline">\(x^r = x^s\)</span> for some <span class="math inline">\(r \neq s\)</span>. Then <span class="math inline">\(G = \langle x \rangle = \{1, x, x^2, \dotsc, x^{n - 1}\}\)</span> where <span class="math inline">\(n\)</span> is the smallest positive integer that <span class="math inline">\(x^n = 1\)</span>.</p>
+</blockquote>
+<h1 id="proof">Proof</h1>
+<p>Let <span class="math inline">\(S = \{k \in \mathbb{Z} \mid x^k = 1\}\)</span> for some <span class="math inline">\(H = \langle x \rangle\)</span> and suppose we have <span class="math inline">\(x^r = x^s\)</span> for some <span class="math inline">\(r \neq s\)</span>. Then <span class="math display">\[
+\begin{align}
+  x^r &amp;= x^s \\
+  x^r x^{-s} &amp;= 1 \\
+  x^{r - s} &amp;= 1
+\end{align}
+\]</span> and <span class="math inline">\(r - s \in S\)</span>.</p>
+  </section>
+  <footer class="pane content backLink">
+    <a href="index.html">-- Back.</a>
+  </footer>
+</article>
+
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async></script>
+  <script src="../../js/main.js"></script>
+</html>
