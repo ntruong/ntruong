@@ -1,5 +1,1 @@
-# ntruong.?
-Carpe noctem.
-
-## License
-GPL3
+# n-truong.com
