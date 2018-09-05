@@ -7,10 +7,8 @@ site : all
 	stack exec site build
 
 deploy : clean site
-	cd _site && \
-	git add --all && \
-	git commit -m "deploy" && \
-	git push origin gh-pages
+	git push origin :gh-pages && \
+	git subtree push --prefix _site origin gh-pages
 
 clean : all
 	stack exec site clean
