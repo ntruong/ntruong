@@ -38,6 +38,10 @@ h1 {
   margin-bottom: 1rem;
 }
 
+article {
+  padding-bottom: 1rem;
+}
+
 .pane {
   background: #ffffff;
   border: 1px solid #cccccc;
@@ -73,8 +77,6 @@ h1 {
 #menubar {
   display: flex;
   padding: 1rem 0;
-  background: #5a80bb;
-  color: #ffffff;
   align-items: center;
 }
 
@@ -83,21 +85,12 @@ h1 {
 }
 
 #menubar .icon {
-  fill: #ffffff;
+  fill: #cccccc;
   width: 2rem;
-  border: 2px solid #ffffff;
-  border-radius: 5px;
 }
 
 #menubar .icon:hover, #menubar .icon.clicked {
-  fill: #5a80bb;
-  background: #ffffff;
-}
-
-#menubar h1 {
-  margin: 0;
-  padding: 0;
-  font-size: 1.5rem;
+  fill: #000000;
 }
 
 #menu {
