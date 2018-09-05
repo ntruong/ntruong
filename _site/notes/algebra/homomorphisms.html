@@ -1,0 +1,90 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet" type="text/css">
+    
+    
+    <link href="../../css/article.css" rel="stylesheet" type="text/css">
+    
+    
+    <title>Homomorphisms | Nicholas Truong</title>
+  </head>
+  <body>
+    <header id="menubar">
+      <div id="menu">
+        <svg class="icon" viewBox="0 0 1024 1024">
+          <rect x="112" , y="162" , rx="50" , ry="50" , height="100" , width="800"></rect>
+          <rect x="112" , y="462" , rx="50" , ry="50" , height="100" , width="800"></rect>
+          <rect x="112" , y="762" , rx="50" , ry="50" , height="100" , width="800"></rect>
+        </svg>
+        <nav class="pane hidden">
+          <a href="../../index.html">Home</a>
+          <a href="../../notes/index.html">Notes</a>
+          <a href="../../static/resume.pdf">Resume</a>
+          <a href="https://github.com/ntruong">Github</a>
+          <a href="https://linkedin.com/in/nicholas-truong">LinkedIn</a>
+          <a href="mailto:nt31415@gmail.com">Email</a>
+        </nav>
+      </div>
+      <h1>Homomorphisms</h1>
+    </header>
+    <div id="banner"></div>
+
+<article>
+  <header class="pane content">
+    <h1>Homomorphisms</h1>
+    <div class="info">
+      
+        [<a href="../../tags/homomorphisms.html">homomorphisms</a>]
+      
+    </div>
+  </header>
+  <section class="pane content">
+    <h1 id="definition">Definition</h1>
+<blockquote>
+<p>Let <span class="math inline">\(\phi : G \to H\)</span> be a mapping between groups <span class="math inline">\(G\)</span> and <span class="math inline">\(H\)</span>. We call <span class="math inline">\(\phi\)</span> a <em>homomorphism</em> if it satisfies <span class="math display">\[
+\phi(ab) = \phi(a) \phi(b)
+\]</span> for all <span class="math inline">\(a, b \in G\)</span>. If <span class="math inline">\(\phi\)</span> is bijective, we say it is <em>isomorphic</em>. We can think of homomorphisms as mappings between groups that preserve composition.</p>
+</blockquote>
+<h1 id="example">Example</h1>
+<p>Consider the two groups <span class="math inline">\(G = (\mathbb{R}, +)\)</span> and <span class="math inline">\(H = (\{e^x \mid x \in \mathbb{R}\}, \times)\)</span> with <span class="math inline">\(\phi\)</span> defined as <span class="math display">\[
+\begin{align}
+  \phi : G &amp;\to H \\
+  x &amp;\mapsto e^x.
+\end{align}
+\]</span> Given <span class="math inline">\(x, y \in \mathbb{R}\)</span>, we have <span class="math display">\[
+\begin{align}
+  \phi(xy) &amp;= e^{xy} \\
+  &amp;= e^x e^y \\
+  &amp;= \phi(x) \phi(y)
+\end{align}
+\]</span> so clearly <span class="math inline">\(\phi\)</span> is a homomorphism.</p>
+<h1 id="definition-1">Definition</h1>
+<blockquote>
+<p>Given a group homomorphism <span class="math inline">\(\phi : G \to H\)</span>, we define the <em>image</em> and <em>kernel</em> of the homomorphism as <span class="math display">\[
+\begin{align}
+\mathrm{im}(\phi) &amp;= \{\phi(x) \mid x \in G\} \\
+\ker(\phi) &amp;= \{x \in G \mid \phi(x) = e_H \}
+\end{align}
+\]</span> where <span class="math inline">\(e_H\)</span> is the identity element in <span class="math inline">\(H\)</span>.</p>
+</blockquote>
+<p>Simply put, the image of <span class="math inline">\(\phi\)</span> is the subset of <span class="math inline">\(H\)</span> mapped to by <span class="math inline">\(G\)</span> and the kernel of <span class="math inline">\(\phi\)</span> is the subset of <span class="math inline">\(G\)</span> that act as the identity in <span class="math inline">\(H\)</span>. Note that we must have <span class="math inline">\(\phi(e_G) = e_H\)</span> since <span class="math display">\[
+\begin{align}
+  \phi(e_G) &amp;= \phi(e_G e_G) \\
+  \phi(e_G) &amp;= \phi(e_G) \phi(e_G) \\
+  \phi(e_G) \phi(e_G)^{-1} &amp;= \phi(e_G) \phi(e_G) \phi(e_G)^{-1} \\
+  e_H &amp;= \phi(e_G).
+\end{align}
+\]</span></p>
+  </section>
+  <footer class="pane content backLink">
+    <a href="index.html">-- Back.</a>
+  </footer>
+</article>
+
+  </body>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML" async></script>
+  <script src="../../js/main.js"></script>
+</html>
