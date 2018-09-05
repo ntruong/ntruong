@@ -1,5 +1,6 @@
 @font-face {
   font-family: 'Open Sans', sans-serif;
+  font-family: 'Crimson Text', serif;
 }
 
 body {
@@ -72,6 +73,11 @@ article {
   max-height: 0;
   padding: 0;
   border: transparent;
+}
+
+#main h1 {
+  font-family: Crimson Text;
+  font-weight: 400;
 }
 
 #menubar {
