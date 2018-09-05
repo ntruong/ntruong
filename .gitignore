@@ -6,3 +6,4 @@ upload.sh
 
 # Hakyll
 _cache
+_site
