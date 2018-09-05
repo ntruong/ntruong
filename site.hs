@@ -5,9 +5,7 @@ import           Control.Monad       (liftM)
 import           Data.Binary
 import           Data.List
 import           Data.Monoid         ((<>))
-import           Data.Ord            (comparing)
 import qualified Data.Set as S
-import           Data.Typeable
 import           Hakyll
 import           Text.Pandoc.Options
 --------------------------------------------------------------------------------
