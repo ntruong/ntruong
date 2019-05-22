@@ -70,8 +70,9 @@ ul.horizontalList li {
   stroke-dasharray: 300;
   fill-opacity: 0;
   transition: 1s linear;
-  animation: draw 1s linear forwards,
-             color 0.5s 0.5s linear forwards;
+  animation:
+    draw 1s linear forwards,
+    color 0.5s 0.5s linear forwards;
 }
 
 @keyframes draw {
